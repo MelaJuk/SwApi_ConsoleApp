@@ -31,10 +31,6 @@ namespace SwApi_ConsoleApp
 
         }
 
-        //public override string ToString()
-        //{
-            
-        //}
     }
 
 

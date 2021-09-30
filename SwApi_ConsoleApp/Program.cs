@@ -11,34 +11,30 @@ namespace SwApi_ConsoleApp
     {
         static readonly HttpClient client = new HttpClient();
         const String requestUrlPeople = "https://swapi.dev/api/people/10/";
-        static string jsonString;
-
 
         static async Task Main()
         {
-            
             try
             {
-                //Serialize();
-                // get json for Obi-Wan and serialize it 
+                // get json for Obi-Wan 
                 string responseBodyPeople = await client.GetStringAsync(requestUrlPeople);
-                //var options = new JsonSerializerOptions { WriteIndented = true };
-                //jsonString = JsonSerializer.Serialize(responseBodyPeople);
-                //Console.WriteLine(jsonString);
 
-                // get vehicle'url 
-                string requestUrlVehicle = jsonPeople.GetValue("vehicles").ToString();
-
-                // Deserialize();
+                // Deserialize() it
                 People obiwan = JsonSerializer.Deserialize<People>(responseBodyPeople);
-                Console.WriteLine(obiwan);
 
+                // diplay the character name
+                Console.WriteLine(obiwan.name);
 
+                // get url and json for the vehicle 
+                string vehicleUrl = obiwan.vehicles.GetValue(0).ToString();
+                string responseVehicule = await client.GetStringAsync(vehicleUrl);
 
-                // display name of the vehicule 
-                string responseBodyVehicles = await client.GetStringAsync(requestUrlVehicle);
-                JObject jsonVehicles = JObject.Parse(responseBodyVehicles);
-                Console.WriteLine(jsonVehicles.GetValue("name"));
+                // Deserialize() it
+                Vehicle obiwanVehicle = JsonSerializer.Deserialize<Vehicle>(responseVehicule);
+
+                // diplay the character name
+                Console.WriteLine(obiwanVehicle.name);
+               
             }
             catch (HttpRequestException e)
             {
@@ -46,19 +42,5 @@ namespace SwApi_ConsoleApp
                 Console.WriteLine("Message :{0} ", e.Message);
             }
         }
-
-        //static async Task Serialize()
-        //{
-        //    // get json for Obi-Wan
-        //    string responseBodyPeople = await client.GetStringAsync(requestUrlPeople);
-        //    jsonString = JsonConvert.SerializeObject(responseBodyPeople);
-           
-        //}
-
-        //static async Task Deserialize()
-        //{
-        //    var obiwan = JsonConvert.DeserializeObject<People>(jsonString);
-        //    Console.WriteLine(obiwan.ToString());
-        //}
     }
 }
