@@ -26,13 +26,19 @@ namespace SwApi_ConsoleApp
                 //jsonString = JsonSerializer.Serialize(responseBodyPeople);
                 //Console.WriteLine(jsonString);
 
-       
+                // get vehicle'url 
+                string requestUrlVehicle = jsonPeople.GetValue("vehicles").ToString();
+
                 // Deserialize();
                 People obiwan = JsonSerializer.Deserialize<People>(responseBodyPeople);
                 Console.WriteLine(obiwan);
 
 
 
+                // display name of the vehicule 
+                string responseBodyVehicles = await client.GetStringAsync(requestUrlVehicle);
+                JObject jsonVehicles = JObject.Parse(responseBodyVehicles);
+                Console.WriteLine(jsonVehicles.GetValue("name"));
             }
             catch (HttpRequestException e)
             {
