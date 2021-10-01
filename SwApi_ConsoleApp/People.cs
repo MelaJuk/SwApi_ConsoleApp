@@ -25,6 +25,7 @@ namespace SwApi_ConsoleApp
         public DateTime created { get; set; }
         public DateTime edited { get; set; }
         public string url { get; set; }
+        // public List<Vehicle> vehicle { get; set; }
 
         public People()
         {
